@@ -337,7 +337,11 @@ class RpcChannel:
         ):
             method = getattr(self.methods, method_name)
             if callable(method):
-                result = await method(**message.arguments)
+                try:
+                    result = await method(**message.arguments)
+                except Exception as e:
+                    logger.exception("RPC method raised exception")
+                    raise
                 if result is not NoResponse:
                     # get indicated type
                     result_type = self.get_return_type(method)
