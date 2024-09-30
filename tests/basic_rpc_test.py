@@ -72,7 +72,7 @@ async def test_other_channel_id(server):
     async with WebSocketRpcClient(uri, RpcUtilityMethods(), default_response_timeout=4) as client:
         try:
             response = await client.other._get_channel_id_()
-            assert response.result_type == 'str'
+            assert isinstance(response.result, str)
             passed = True
         except Exception as e:
             logging.exception("_get_channel_id test failed")

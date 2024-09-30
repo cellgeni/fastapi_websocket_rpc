@@ -23,14 +23,12 @@ if is_pydantic_pre_v2():
 
     class RpcResponse(GenericModel, Generic[ResponseT]):
         result: ResponseT
-        result_type: Optional[str]
         call_id: Optional[UUID] = None
 
 else:
 
     class RpcResponse(BaseModel, Generic[ResponseT]):
         result: ResponseT
-        result_type: Optional[str]
         call_id: Optional[UUID] = None
 
 

@@ -344,19 +344,10 @@ class RpcChannel:
                     raise
                 if result is not NoResponse:
                     # get indicated type
-                    result_type = self.get_return_type(method)
-                    # if no type given - try to convert to string
-                    if result_type is str and type(result) is not str:
-                        result = str(result)
                     response = RpcMessage(
-                        response=RpcResponse[result_type](
+                        response=RpcResponse(
                             call_id=message.call_id,
                             result=result,
-                            result_type=getattr(
-                                result_type,
-                                "__name__",
-                                getattr(result_type, "_name", "unknown-type"),
-                            ),
                         )
                     )
                     await self.send(response)
